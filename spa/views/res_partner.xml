@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="view_generic_kanban" model="ir.ui.view">
+        <field name="name">generic.kanban.view</field>
+        <field name="model">res.partner</field> <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="display_name"/>
+                <field name="image_128" widget="image" class="oe_kanban_image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-if="record.image_128.raw_value" t-att-src="kanban_image('res.partner', 'image_128', record.id.raw_value)"/>
+                                <t t-else="">
+                                    <div class="oe_kanban_image_placeholder oe_kanban_image">
+                                        <i class="fa fa-user"/>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <strong><field name="display_name"/></strong>
+                                <ul>
+                                    </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_generic_kanban_view" model="ir.actions.act_window">
+        <field name="name">Vista Kanban Rápida</field>
+        <field name="res_model">res.partner</field> 
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem id="menu_generic_kanban_main" name="Mi Kanban" action="action_generic_kanban_view"/>
+
+</odoo>

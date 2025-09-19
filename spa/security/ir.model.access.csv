@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_services_report,access_hr_services_report,model_hr_services_report,,1,1,1,1
+access_hr_services_report_line,access_hr_services_report_line,model_hr_services_report_line,,1,1,1,1
+access_wizard_add_service,access_wizard_add_service,model_wizard_add_service,,1,1,1,1
