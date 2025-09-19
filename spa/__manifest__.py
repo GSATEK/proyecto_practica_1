@@ -7,7 +7,7 @@
     'depends': ['base','product', 'hr'],
     'data': [
         'security/ir.model.access.csv',
-        'views/res_partner.xml',
+        'views/hr_employee_kanban_view_spa.xml',
         'wizards/wizard_add_service.xml',
         'reports/report_services.xml',
     ],

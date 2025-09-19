@@ -7,8 +7,8 @@
         <field name="arch" type="xml">
             <form string="Agregar Servicio">
                 <group>
+                    <field name="employee_id" invisible="1"/>
                     <field name="exemple_field" />
-                    <field name="name_employee" />
                 </group>
                 <footer>
                     <button string="Agregar Servicio" name="action_add_service" type="object" class="btn-primary"/>
