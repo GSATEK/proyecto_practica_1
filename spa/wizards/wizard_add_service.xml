@@ -30,7 +30,7 @@
         id="menu_wizard_add_service"
         name="Agregar Servicio"
         action="view_action_wizard_add_service"
-        parent="spa.menu_generic_kanban_main"
+        parent="spa.menu_hr_employee_kanban"
         sequence="10"/>
 
 </odoo>
