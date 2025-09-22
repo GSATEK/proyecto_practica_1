@@ -16,12 +16,23 @@ class WizardAddEmployeeService(models.TransientModel):
     def action_add_service(self):
         self.ensure_one()
         report_vals = {
-            'name': _('Service Report - %s') % (self.partner_id.display_name or ''),
             'employee_id': self.employee_id.id,
             'partner_id': self.partner_id.id,
+            'line_ids': [(0, 0, {
+            'product_id': line.product_id.id,
+            'quantity': line.quantity,
+            'unit_price': line.unit_price,
+        }) for line in self.line_ids],
         }
-        self.env['hr.employee.services.report'].create(report_vals)
-        return {'type': 'ir.actions.act_window_close'}
+        report = self.env['hr.employee.services.report'].create(report_vals)
+        return {
+            'name': _('Service Report'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.employee.services.report',
+            'view_mode': 'form',
+            'res_id': report.id,
+            'target': 'current',
+        }
 
 class WizardAddEmployeeServiceLine(models.TransientModel):
     _name = "wizard.add.employee.service.line"
@@ -29,6 +40,18 @@ class WizardAddEmployeeServiceLine(models.TransientModel):
     
     product_id = fields.Many2one('product.template', string='Producto', required=True)
     quantity = fields.Float('Cantidad', default=1.0)
+    unit_price = fields.Monetary('Unit Price', currency_field='currency_id')
+    currency_id = fields.Many2one(
+        'res.currency',
+        string='Currency',
+        default=lambda self: self.env.company.currency_id.id
+    )
+    subtotal = fields.Monetary(
+        'Subtotal', compute='_compute_subtotal', currency_field='currency_id', store=True)
     
     wizard_id = fields.Many2one('wizard.add.employee.service', string='Wizard', required=True, ondelete='cascade')
     
+    @api.depends('quantity', 'unit_price')
+    def _compute_subtotal(self):
+        for line in self:
+            line.subtotal = (line.quantity or 0.0) * (line.unit_price or 0.0)

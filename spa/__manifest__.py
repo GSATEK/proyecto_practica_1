@@ -8,6 +8,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/hr_employee_kanban_view_spa.xml',
+        'views/hr_employee_record.xml',
         'wizards/wizard_add_service.xml',
         'reports/report_services.xml',
     ],
