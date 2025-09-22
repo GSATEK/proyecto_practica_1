@@ -5,6 +5,7 @@
 			<div class="page">
 				<h2>Servicios - Informe</h2>
 				<t t-foreach="docs" t-as="doc">
+					<h3>Trabajador: <t t-esc="doc.employee_id.name"/></h3>
 					<h3><t t-esc="doc.name"/></h3>
 					<p><t t-esc="doc.description or ''"/></p>
 					<!-- Mostrar servicios asociados -->
@@ -18,14 +19,17 @@
 								</tr>
 							</thead>
 							<tbody>
+								<t t-set="total_price" t-value="0"/>
 								<t t-foreach="doc.line_ids" t-as="line">
 									<tr>
 										<td><t t-esc="line.service_id.name"/></td>
 										<td><t t-esc="line.unit_price"/></td>
 									</tr>
+									<t t-set="total_price" t-value="total_price + (line.unit_price or 0)"/>
 								</t>
 							</tbody>
 						</table>
+						<h5>Precio total: <t t-esc="total_price"/></h5>
 					</t>
 				</t>
 			</div>
