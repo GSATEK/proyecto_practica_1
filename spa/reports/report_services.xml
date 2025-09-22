@@ -36,6 +36,6 @@
 		</t>
 	</template>
 
-	<report id="action_report_services" model="hr.services.report" string="Servicios" report_type="qweb-pdf" name="proyecto_practica_1_tmp.report_services_document" file="proyecto_practica_1_tmp.report_services_document"/>
+	<report id="action_report_services" model="hr.employee.services.report" string="Servicios" report_type="qweb-pdf" name="proyecto_practica_1_tmp.report_services_document" file="proyecto_practica_1_tmp.report_services_document"/>
 
 </odoo>
