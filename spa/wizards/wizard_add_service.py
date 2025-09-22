@@ -19,7 +19,7 @@ class WizardAddEmployeeService(models.TransientModel):
             'employee_id': self.employee_id.id,
             'partner_id': self.partner_id.id,
         }
-        report = self.env['hr.services.report'].create(report_vals)  # usa tu modelo existente :contentReference[oaicite:1]{index=1}
+        report = self.env['hr.employee.services.report'].create(report_vals)  # usa tu modelo existente :contentReference[oaicite:1]{index=1}
 
         line_commands = []
         for wl in self.line_ids:
@@ -59,7 +59,7 @@ class WizardAddEmployeeServiceLine(models.TransientModel):
             rec.subtotal = (rec.quantity or 0.0) * (rec.unit_price or 0.0)
 
     ''' def action_add_service(self):
-        report = self.env['hr.services.report']
+        report = self.env['hr.employee.services.report']
         value = {
             'name': self.partner_id.name,
             'employee_id': self.employee_id,
