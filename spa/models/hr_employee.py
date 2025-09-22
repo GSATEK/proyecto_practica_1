@@ -7,9 +7,9 @@ class HrEmployee(models.Model):
     def open_service_wizard(self):
         """Open the service addition wizard for the selected employee."""
         return {
-            'name': 'Add Service',
+            'name': 'Añadir Servicio',
             'type': 'ir.actions.act_window',
-            'res_model': 'wizard.add.service',
+            'res_model': 'wizard.add.employee.service',
             'view_mode': 'form',
             'target': 'new',
             'context': {
