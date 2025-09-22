@@ -1,11 +1,11 @@
 from odoo import fields, models, api
 
-class HrEmployeeServicesReportLine(models.Model):
-    _name = 'hr.employee.services.report.line'
+class HrEmployeeServicesRecordsLine(models.Model):
+    _name = 'hr.employee.services.record.line'
     _description = 'HR Services Report Line'
 
     report_id = fields.Many2one(
-        'hr.employee.services.report', 
+        'hr.employee.services.record',  
         string='Service Report',
         required=True,
         ondelete='cascade',

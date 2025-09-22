@@ -24,11 +24,11 @@ class WizardAddEmployeeService(models.TransientModel):
             'unit_price': line.unit_price,
         }) for line in self.line_ids],
         }
-        report = self.env['hr.employee.services.report'].create(report_vals)
+        report = self.env['hr.employee.services.record'].create(report_vals)
         return {
             'name': _('Service Report'),
             'type': 'ir.actions.act_window',
-            'res_model': 'hr.employee.services.report',
+            'res_model': 'hr.employee.services.record', 
             'view_mode': 'form',
             'res_id': report.id,
             'target': 'current',

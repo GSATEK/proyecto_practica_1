@@ -1,7 +1,7 @@
 from odoo import fields, models, api
 
-class HrEmployeeServicesReport(models.Model):
-    _name = 'hr.employee.services.report'
+class HrEmployeeServicesRecords(models.Model):
+    _name = 'hr.employee.services.record'
     _description = 'HR Services Report'
 
     # Basic fields
@@ -12,7 +12,7 @@ class HrEmployeeServicesReport(models.Model):
     partner_id  = fields.Many2one('res.partner', string='Client', required=True)
     
     line_ids = fields.One2many(
-        'hr.employee.services.report.line',
+        'hr.employee.services.record.line',
         'report_id',
         string="Service Lines",
     )
