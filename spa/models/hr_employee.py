@@ -16,3 +16,7 @@ class HrEmployee(models.Model):
                 'default_employee_id': self.id,
             },
         }
+    def get_line_ids(self):
+        self.ensure_one()
+        line_obj = self.env['hr.service.records']
+        return line_obj.search([('employee_id', '=', self.id)])
