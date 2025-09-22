@@ -10,6 +10,7 @@
         'views/hr_employee_kanban_view_spa.xml',
         'views/hr_employee_record.xml',
         'wizards/wizard_add_service.xml',
+        'wizards/wizard_generate_report.xml',
         'reports/report_services.xml',
     ],
     "images": ["static/description/icon.png"]

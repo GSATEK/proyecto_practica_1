@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_form_wizard_generate_report" model="ir.ui.view">
+        <field name="name">view_form_wizard_generate_report</field>
+        <field name="model">wizard.generate.employee.report</field>
+        <field name="arch" type="xml">
+        <form string="Generar Reporte">
+            <group>
+            <field name="employee_id"/> 
+            <field name="date_from"/>
+            <field name="date_to"/>
+            </group>
+            <footer>
+            <button string="Generar Reporte" name="action_generate_report" type="object" class="btn-primary"/>
+            <button string="Cancelar" special="cancel"/>
+            </footer>
+        </form>
+        </field>
+    </record>
+
+    <record id="view_action_wizard_generate_report" model="ir.actions.act_window">
+        <field name="name">Generar Reporte</field>
+        <field name="res_model">wizard.generate.employee.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_form_wizard_generate_report"/>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_wizard_generate_report" name="Generar Reporte" parent="menu_hr_employee_services_report" action="view_action_wizard_generate_report"/>
+</odoo>
