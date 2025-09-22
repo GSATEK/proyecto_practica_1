@@ -10,12 +10,15 @@ class HrEmployeeServicesReport(models.Model):
     date_report = fields.Datetime('Report Date', default=fields.Datetime.now)
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
     partner_id  = fields.Many2one('res.partner', string='Client', required=True)
+    
     line_ids = fields.One2many(
         'hr.employee.services.report.line',
         'report_id',
         string="Service Lines",
     )
+    
     commission_rate = fields.Float('Commission', help='Commission for the service')
+    
     total_amount = fields.Monetary(
         'Total Amount',
         compute='_compute_total_amount',

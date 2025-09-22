@@ -9,6 +9,16 @@
           <field name="employee_id"/>
           <field name="partner_id"/>
         </group>
+        <notebook>
+            <page name="Linias" string="Linias">
+                <field name="line_ids">
+                    <tree editable="bottom">
+                        <field name="product_id"/>
+                        <field name="quantity"/>
+                    </tree>
+                </field>
+            </page>
+        </notebook>
         <footer>
           <button string="Crear reporte" name="action_add_service" type="object" class="btn-primary"/>
           <button string="Cancelar" special="cancel"/>
