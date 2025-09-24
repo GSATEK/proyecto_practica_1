@@ -11,15 +11,16 @@ class HrEmployeeServicesRecordsLine(models.Model):
         ondelete='cascade',
     )
     
-    product_id = fields.Many2one('product.product', string='Product', required=True)
+    product_id = fields.Many2one('product.template' , string='Product', required=True)
     quantity = fields.Float('Quantity', default=1.0)
-    unit_price = fields.Monetary('Unit Price', currency_field='currency_id')
     currency_id = fields.Many2one(
         'res.currency',
         string='Currency',
         related='report_id.currency_id',
         store=False, readonly=True
     )
+
+    unit_price = fields.Monetary('Unit Price', currency_field='currency_id')
     subtotal = fields.Monetary(
         'Subtotal',
         compute='_compute_subtotal',

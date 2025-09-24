@@ -19,20 +19,32 @@ class HrEmployeeServicesRecords(models.Model):
         string="Service Lines",
     )
     
-    commission_rate = fields.Float('Commission', help='Commission for the service')
+    commission_rate = fields.Float('Commission', default=50.0)
+    
+    currency_id = fields.Many2one(
+        'res.currency',
+        string='Currency',
+        default=lambda self: self.env['res.currency'].search([('name', '=', 'EUR')], limit=1).id
+    )
     
     total_amount = fields.Monetary(
         'Total Amount',
         compute='_compute_total_amount',
         currency_field='currency_id'
     )
-    currency_id = fields.Many2one(
-        'res.currency',
-        string='Currency',
-        default=lambda self: self.env.company.currency_id.id
+    
+    amout_employee = fields.Monetary(
+        'Amount to Employee',
+        compute='_compute_amount_employee',
+        currency_field='currency_id'
     )
     
     @api.depends('line_ids.subtotal')
     def _compute_total_amount(self):
         for rec in self:
             rec.total_amount = sum(rec.line_ids.mapped('subtotal'))
+    
+    @api.depends('total_amount', 'commission_rate')
+    def _compute_amount_employee(self):
+        for rec in self:
+            rec.amout_employee = rec.total_amount * (rec.commission_rate / 100)
