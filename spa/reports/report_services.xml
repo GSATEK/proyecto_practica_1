@@ -32,15 +32,19 @@
                         <table style="width: 100%; border-collapse: collapse;">
                             <thead>
                                 <tr style="background-color: #f8f8f8; text-align: left;">
+									<th style="padding: 10px; font-size: 14px;">Producto</th>
                                     <th style="padding: 10px; font-size: 14px;">Cantidad</th>
                                     <th style="padding: 10px; font-size: 14px;">Precio Unitario</th>
+                                    <th style="padding: 10px; font-size: 14px;">Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <t t-foreach="doc.hr_service_record_ids.line_ids" t-as="line">
                                     <tr style="border-bottom: 1px solid #ddd;">
+										<td style="padding: 8px; font-size: 12px;"><span t-esc="line.product_id.name" /></td>
                                         <td style="padding: 8px; font-size: 12px;"><span t-esc="line.quantity" /></td>
                                         <td style="padding: 8px; font-size: 12px;"><span t-esc="line.unit_price" /></td>
+										<td style="padding: 8px; font-size: 12px;"><span t-esc="line.subtotal" /></td>
                                     </tr>    
                                 </t>
                             </tbody>
