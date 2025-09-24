@@ -40,8 +40,12 @@
                                     <tr style="border-bottom: 1px solid #ddd;">
 										<td style="padding: 8px; font-size: 12px;"><span t-esc="line.product_id.name" /></td>
                                         <td style="padding: 8px; font-size: 12px;"><span t-esc="line.quantity" /></td>
-                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="line.unit_price" /></td>
-										<td style="padding: 8px; font-size: 12px;"><span t-esc="line.subtotal" /></td>
+                                         <td style="padding: 8px; font-size: 12px;">
+                                            <span t-esc="'€' + '%.2f' % line.unit_price" />
+                                        </td>
+                                        <td style="padding: 8px; font-size: 12px;">
+                                            <span t-esc="'€' + '%.2f' % line.subtotal" />
+                                        </td>
                                     </tr>    
                                 </t>
                             </tbody>
