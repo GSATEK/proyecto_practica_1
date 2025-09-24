@@ -6,6 +6,7 @@ class WizardAddEmployeeService(models.TransientModel):
 
     employee_id = fields.Many2one('hr.employee', string="Empleado", required=True)
     partner_id = fields.Many2one('res.partner', string="Cliente", required=True)
+    date = fields.Datetime(string="Fecha", required=True, default=fields.Datetime.now)
     line_ids = fields.One2many(
         'wizard.add.employee.service.line', 
         'wizard_id',

@@ -10,6 +10,8 @@ class HrEmployeeServicesRecords(models.Model):
     date_report = fields.Datetime('Report Date', default=fields.Datetime.now)
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
     partner_id  = fields.Many2one('res.partner', string='Client', required=True)
+ 
+    date = fields.Date('Service Date', required=True, default=fields.Date.context_today)
     
     line_ids = fields.One2many(
         'hr.employee.services.record.line',
