@@ -7,7 +7,8 @@
                 <field name="employee_id"/>
                 <field name="partner_id"/>
                 <field name="commission_rate"/>
-                <field name="total_amount" widget="monetary"/>
+                <field name="amout_employee" widget="monetary" string="Para Empleado"/>
+                <field name="total_amount" widget="monetary" string="Total"/>
                 <field name="currency_id" string="Moneda" invisible="0" />
             </tree>
         </field>
@@ -25,6 +26,7 @@
                         <field name="partner_id"/>
                         <field name="commission_rate"/>
                         <field name="total_amount" widget="monetary" />
+                        <field name="amout_employee" widget="monetary" />
                         <field name="currency_id" string="Moneda" invisible="0" />
                     </group>
                     <notebook>
@@ -46,11 +48,11 @@
     </record>
 
     <record id="action_views_hr_employee_services_report" model="ir.actions.act_window">
-        <field name="name">Reportes</field>
+        <field name="name">Reportes SPA</field>
         <field name="res_model">hr.employee.services.record</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_hr_employee_services_report" />
     </record>
 
-    <menuitem id="menu_hr_employee_services_report" name="Reporte Empleado" action="action_views_hr_employee_services_report" />
+    <menuitem id="menu_hr_employee_services_report" name="SPA Reportes" action="action_views_hr_employee_services_report" />
 </odoo>

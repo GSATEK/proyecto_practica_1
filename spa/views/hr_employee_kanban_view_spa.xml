@@ -88,13 +88,13 @@
   </record>
 
   <record id="hr_employee_action_view_spa" model="ir.actions.act_window">
-    <field name="name">Employee Kanban</field>
+    <field name="name">Registro SPA</field>
     <field name="res_model">hr.employee</field>
     <field name="view_mode">kanban,tree,form</field>
     <field name="view_id" ref="spa.hr_employee_kanban_view_spa"/>
   </record>
 
   <menuitem id="menu_hr_employee_kanban"
-            name="Employee Kanban"
+            name="SPA Empleados"
             action="hr_employee_action_view_spa"/>
 </odoo>
