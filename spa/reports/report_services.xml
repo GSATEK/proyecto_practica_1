@@ -4,11 +4,9 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <!-- Título principal -->
                     <h2 style="font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px;">Servicios - Informe</h2>
 
                     <t t-foreach="docs" t-as="doc">
-                        <!-- Tabla de Servicios -->
                         <table class="table table-sm table-bordered" style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
                             <thead>
                                 <tr style="background-color: #f8f8f8; text-align: left;">
@@ -28,7 +26,6 @@
                             </tbody>
                         </table>
 
-                        <!-- Tabla de Cantidad y Precio -->
                         <table style="width: 100%; border-collapse: collapse;">
                             <thead>
                                 <tr style="background-color: #f8f8f8; text-align: left;">
