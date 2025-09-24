@@ -6,6 +6,7 @@ class WizardAddEmployeeService(models.TransientModel):
 
     employee_id = fields.Many2one('hr.employee', string="Empleado", required=True)
     partner_id = fields.Many2one('res.partner', string="Cliente", required=True)
+    description = fields.Text('Descripción')
     date = fields.Datetime(string="Fecha", required=True, default=fields.Datetime.now)
     line_ids = fields.One2many(
         'wizard.add.employee.service.line', 
@@ -23,6 +24,7 @@ class WizardAddEmployeeService(models.TransientModel):
             'product_id': line.product_id.id,
             'quantity': line.quantity,
             'unit_price': line.unit_price,
+            'description': self.description,
         }) for line in self.line_ids],
         }
         report = self.env['hr.employee.services.record'].create(report_vals)

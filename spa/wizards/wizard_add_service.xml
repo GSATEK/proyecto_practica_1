@@ -6,8 +6,8 @@
     <field name="arch" type="xml">
       <form string="Agregar servicios">
         <group>
-          <field name="employee_id"/>
           <field name="partner_id"/>
+          <field name="description" />
           <field name="date"/>
         </group>
         <notebook>
