@@ -21,15 +21,16 @@ class HrEmployeeServicesRecords(models.Model):
     
     commission_rate = fields.Float('Commission', help='Commission for the service')
     
+    currency_id = fields.Many2one(
+        'res.currency',
+        string='Currency',
+        default=lambda self: self.env['res.currency'].search([('name', '=', 'EUR')], limit=1).id
+    )
+    
     total_amount = fields.Monetary(
         'Total Amount',
         compute='_compute_total_amount',
         currency_field='currency_id'
-    )
-    currency_id = fields.Many2one(
-        'res.currency',
-        string='Currency',
-        default=lambda self: self.env.company.currency_id.id
     )
     
     @api.depends('line_ids.subtotal')

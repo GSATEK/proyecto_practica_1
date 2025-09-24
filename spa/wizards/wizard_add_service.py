@@ -40,13 +40,13 @@ class WizardAddEmployeeServiceLine(models.TransientModel):
     _description = "Wizard Linieas para agregar servicios a un cliente"
     
     product_id = fields.Many2one('product.template', string='Producto', required=True)
-    quantity = fields.Float('Cantidad', default=1.0)
-    unit_price = fields.Monetary('Unit Price', currency_field='currency_id')
     currency_id = fields.Many2one(
         'res.currency',
         string='Currency',
-        default=lambda self: self.env.company.currency_id.id
+        default=lambda self: self.env['res.currency'].search([('name', '=', 'EUR')], limit=1).id
     )
+    quantity = fields.Float('Cantidad', default=1.0)
+    unit_price = fields.Monetary('Unit Price', currency_field='currency_id')
     subtotal = fields.Monetary(
         'Subtotal', compute='_compute_subtotal', currency_field='currency_id', store=True)
     
