@@ -6,31 +6,13 @@
 				<h2>Servicios - Informe</h2>
 				<t t-foreach="docs" t-as="doc">
 					<h3>Trabajador: <t t-esc="doc.employee_id.name"/></h3>
-					<h4>Referencia: <t t-esc="doc.name"/></h4>
+	
 					<p><t t-esc="doc.description or ''"/></p>
 					
-					<t t-if="doc.line_ids">
-						<h4>Servicios seleccionados:</h4>
-						<table class="table table-sm">
-							<thead>
-								<tr>
-									<th>Nombre</th>
-									<th>Precio Unitario</th>
-								</tr>
-							</thead>
-							<tbody>
-								<t t-set="total_price" t-value="0"/>
-								<t t-foreach="doc.line_ids" t-as="line">
-									<tr>
-										<td><t t-esc="line.product_id.name"/></td>
-										<td><t t-esc="line.unit_price"/></td>
-									</tr>
-									<t t-set="total_price" t-value="total_price + (line.unit_price or 0)"/>
-								</t>
-							</tbody>
-						</table>
-						<h5>Precio total: <t t-esc="total_price"/></h5>
-					</t>
+					<p><strong>Fecha de inicio:</strong> <t t-esc="doc.start_date or ''"/></p>
+					<p><strong>Fecha de fin:</strong> <t t-esc="doc.end_date or ''"/></p>
+					<p><strong>Estado:</strong> <t t-esc="doc.state or ''"/></p>
+					<p><strong>Cliente:</strong> <t t-esc="doc.client_id.name or ''"/></p>
 				</t>
 			</div>
 		</t>
@@ -38,10 +20,10 @@
 
 	<record id="action_report_services" model="ir.actions.report">
         <field name="name">Print Services Report</field>
-        <field name="model">hr.employee.services.record</field>
+        <field name="model">wizard.generate.employee.report</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">proyecto_practica_1_tmp.report_services_document</field>
-        <field name="report_file">proyecto_practica_1_tmp.report_services_document</field>
-        <field name="print_report_name">'Servicios ' + object.display_name</field>
+        <field name="report_name">spa.report_services_document</field>
+        <field name="report_file">spa.report_services_document</field>
+        <field name="print_report_name">'Servicios'</field>
     </record>
 </odoo>
