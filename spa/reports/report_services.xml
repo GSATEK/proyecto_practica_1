@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<odoo>
-		<template id="report_services_document">
-			<t t-call="web.html_container">
-				<t t-call="web.external_layout">
-					<div class="page">
-						<h2>Servicios - Informe</h2>
-						<t t-foreach="docs" t-as="doc">
-							<table class="table table-sm table-bordered">
-								<thead>
-								<tr>
-									<th>Empleado</th>
-									<th>Fecha</th>
-									<th>Descripción del Servicio</th>
-								</tr>
-							</thead>
-							<tbody>
-								<t t-foreach="doc.hr_service_record_ids" t-as="record">
-									<tr>
-										<td><span t-esc="record.employee_id.name"/></td>
-										<td><span t-esc="record.date and record.date.strftime('%Y-%m-%d')"/></td>
-										<td><span t-esc="record.description"/></td>
-									</tr>
-								</t>
-							</tbody>
-							
-						</table>
-						<table>
-							<thead>
-								<tr>
-									<th>Cantidad</th>
-									<th>Precio Unitario</th>
-								</tr>
-							</thead>
-							<tbody>
-								<t t-foreach="doc.hr_service_record_ids.line_ids" t-as="line">
-									<tr>
-										<td><span t-esc="line.quantity" /></td>
-										<td><span t-esc="line.unit_price" /></td>
-									</tr>	
-								</t>
-							</tbody>
-						</table>
-					</t>
-				</div>
-			</t>
-			</t>
-		</template>
+<odoo>
+    <template id="report_services_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <!-- Título principal -->
+                    <h2 style="font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px;">Servicios - Informe</h2>
 
-		<record id="action_report_services" model="ir.actions.report">
-			<field name="name">Print Services Report</field>
-			<field name="model">wizard.generate.employee.report</field>
-			<field name="report_type">qweb-pdf</field>
-			<field name="report_name">spa.report_services_document</field>
-			<field name="report_file">spa.report_services_document</field>
-			<field name="print_report_name">'Servicios'</field>
-		</record>
-	</odoo>
+                    <t t-foreach="docs" t-as="doc">
+                        <!-- Tabla de Servicios -->
+                        <table class="table table-sm table-bordered" style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                            <thead>
+                                <tr style="background-color: #f8f8f8; text-align: left;">
+                                    <th style="padding: 10px; font-size: 14px;">Empleado</th>
+                                    <th style="padding: 10px; font-size: 14px;">Fecha</th>
+                                    <th style="padding: 10px; font-size: 14px;">Descripción del Servicio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.hr_service_record_ids" t-as="record">
+                                    <tr style="border-bottom: 1px solid #ddd;">
+                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="record.employee_id.name"/></td>
+                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="record.date and record.date.strftime('%Y-%m-%d')"/></td>
+                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="record.description"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Tabla de Cantidad y Precio -->
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f8f8f8; text-align: left;">
+                                    <th style="padding: 10px; font-size: 14px;">Cantidad</th>
+                                    <th style="padding: 10px; font-size: 14px;">Precio Unitario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.hr_service_record_ids.line_ids" t-as="line">
+                                    <tr style="border-bottom: 1px solid #ddd;">
+                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="line.quantity" /></td>
+                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="line.unit_price" /></td>
+                                    </tr>    
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_services" model="ir.actions.report">
+        <field name="name">Print Services Report</field>
+        <field name="model">wizard.generate.employee.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">spa.report_services_document</field>
+        <field name="report_file">spa.report_services_document</field>
+        <field name="print_report_name">'Servicios'</field>
+    </record>
+</odoo>
