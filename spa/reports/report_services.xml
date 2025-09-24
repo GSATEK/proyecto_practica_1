@@ -5,14 +5,29 @@
 			<div class="page">
 				<h2>Servicios - Informe</h2>
 				<t t-foreach="docs" t-as="doc">
-					<h3>Trabajador: <t t-esc="doc.employee_id.name"/></h3>
-	
-					<p><t t-esc="doc.description or ''"/></p>
-					
-					<p><strong>Fecha de inicio:</strong> <t t-esc="doc.start_date or ''"/></p>
-					<p><strong>Fecha de fin:</strong> <t t-esc="doc.end_date or ''"/></p>
-					<p><strong>Estado:</strong> <t t-esc="doc.state or ''"/></p>
-					<p><strong>Cliente:</strong> <t t-esc="doc.client_id.name or ''"/></p>
+					<table class="table table-sm table-bordered">
+						<thead>
+							<tr>
+								<th>Empleado</th>
+								<th>Fecha</th>
+								<th>Descripción del Servicio</th>
+							</tr>
+						</thead>
+						<tbody>
+							<t t-foreach="doc.hr_service_record_ids" t-as="record">
+								<tr>
+									<td><span t-esc="record.employee_id.name"/></td>
+									<td><span t-esc="record.date and record.date.strftime('%Y-%m-%d')"/></td>
+									<td><span t-esc="record.description"/></td>
+								</tr>
+							</t>
+						</tbody>
+						<t t-foreach="doc.hr_service_record_ids.line_ids" t-as="line">
+							<tr>
+								<td><span t-esc="line.quantity" /></td>
+							</tr>	
+						</t>
+					</table>
 				</t>
 			</div>
 		</t>
