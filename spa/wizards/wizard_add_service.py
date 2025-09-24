@@ -20,11 +20,11 @@ class WizardAddEmployeeService(models.TransientModel):
         report_vals = {
             'employee_id': self.employee_id.id,
             'partner_id': self.partner_id.id,
+            'description': self.description,
             'line_ids': [(0, 0, {
             'product_id': line.product_id.id,
             'quantity': line.quantity,
             'unit_price': line.unit_price,
-            'description': self.description,
         }) for line in self.line_ids],
         }
         report = self.env['hr.employee.services.record'].create(report_vals)

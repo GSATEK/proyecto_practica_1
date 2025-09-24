@@ -13,6 +13,7 @@
                                     <th style="padding: 10px; font-size: 14px;">Empleado</th>
                                     <th style="padding: 10px; font-size: 14px;">Fecha</th>
                                     <th style="padding: 10px; font-size: 14px;">Descripción del Servicio</th>
+                                    <th style="padding: 10px; font-size: 14px;">Retrubucion Empleado</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -21,6 +22,9 @@
                                         <td style="padding: 8px; font-size: 12px;"><span t-esc="record.employee_id.name"/></td>
                                         <td style="padding: 8px; font-size: 12px;"><span t-esc="record.date and record.date.strftime('%Y-%m-%d')"/></td>
                                         <td style="padding: 8px; font-size: 12px;"><span t-esc="record.description"/></td>
+                                        <td style="padding: 8px; font-size: 12px;">
+                                            <span t-esc="'€' + '%.2f' % record.amout_employee" />
+                                        </td>
                                     </tr>
                                 </t>
                             </tbody>
