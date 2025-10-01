@@ -4,56 +4,179 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h2 style="font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px;">Servicios - Informe</h2>
+                    <h2
+                        style="font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px;">
+                        <t t-if="docs[0].report_type == 'global'">
+                            Reporte Global de Servicios - Todos los Empleados
+                        </t>
+                        <t t-else=""> Reporte de Servicios - <span t-esc="docs[0].employee_id.name" />
+                        </t>
+                    </h2>
 
-                    <t t-foreach="docs" t-as="doc">
-                        <table class="table table-sm table-bordered" style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
-                            <thead>
-                                <tr style="background-color: #f8f8f8; text-align: left;">
-                                    <th style="padding: 10px; font-size: 14px;">Empleado</th>
-                                    <th style="padding: 10px; font-size: 14px;">Fecha</th>
-                                    <th style="padding: 10px; font-size: 14px;">Descripción del Servicio</th>
-                                    <th style="padding: 10px; font-size: 14px;">Retrubucion Empleado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="doc.hr_service_record_ids" t-as="record">
-                                    <tr style="border-bottom: 1px solid #ddd;">
-                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="record.employee_id.name"/></td>
-                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="record.date and record.date.strftime('%Y-%m-%d')"/></td>
-                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="record.description"/></td>
-                                        <td style="padding: 8px; font-size: 12px;">
-                                            <span t-esc="'€' + '%.2f' % record.amout_employee" />
-                                        </td>
+                    <p style="text-align: center; margin-bottom: 20px;"> Período: <span
+                            t-esc="docs[0].date_from.strftime('%d/%m/%Y')" /> al <span
+                            t-esc="docs[0].date_to.strftime('%d/%m/%Y')" />
+                    </p>
+
+                    <!-- Agrupar por empleado en reporte global -->
+                    <t t-if="docs[0].report_type == 'global'">
+                        <!-- Obtener todos los empleados únicos del reporte -->
+                        <t t-set="unique_employees"
+                            t-value="docs[0].hr_service_record_ids.mapped('employee_id')" />
+
+                        <t t-foreach="unique_employees" t-as="employee">
+                            <div style="margin-bottom: 40px; page-break-inside: avoid; page-break-after: always;">
+                                <h3
+                                    style="background-color: #f0f0f0; padding: 10px; font-size: 18px;">
+                                    Empleado: <span t-esc="employee.name" />
+                                </h3>
+
+                                <!-- Filtrar registros por empleado actual -->
+                                <t t-set="employee_records"
+                                    t-value="docs[0].hr_service_record_ids.filtered(lambda r: r.employee_id.id == employee.id)" />
+
+                                <!-- Tabla de servicios -->
+                                <table class="table table-sm table-bordered"
+                                    style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                                    <thead>
+                                        <tr style="background-color: #f8f8f8; text-align: left;">
+                                            <th style="padding: 10px; font-size: 14px;">Fecha</th>
+                                            <th style="padding: 10px; font-size: 14px;">Descripción
+                                                del Servicio</th>
+                                            <th style="padding: 10px; font-size: 14px;">Retribución
+                                                Empleado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="employee_records" t-as="record">
+                                            <tr style="border-bottom: 1px solid #ddd;">
+                                                <td style="padding: 8px; font-size: 12px;">
+                                                    <span
+                                                        t-esc="record.date and record.date.strftime('%Y-%m-%d')" />
+                                                </td>
+                                                <td style="padding: 8px; font-size: 12px;">
+                                                    <span t-esc="record.description" />
+                                                </td>
+                                                <td style="padding: 8px; font-size: 12px;">
+                                                    <span
+                                                        t-esc="'€' + '%.2f' % record.amout_employee" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <!-- Total por empleado -->
+                                        <tr style="background-color: #e8e8e8; font-weight: bold;">
+                                            <td colspan="2" style="padding: 8px; text-align: right;">Total
+                                                Empleado:</td>
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span
+                                                    t-esc="'€' + '%.2f' % sum(employee_records.mapped('amout_employee'))" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- Tabla de productos -->
+                                <table
+                                    style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                                    <thead>
+                                        <tr style="background-color: #f8f8f8; text-align: left;">
+                                            <th style="padding: 10px; font-size: 14px;">Producto</th>
+                                            <th style="padding: 10px; font-size: 14px;">Cantidad</th>
+                                            <th style="padding: 10px; font-size: 14px;">Precio
+                                                Unitario</th>
+                                            <th style="padding: 10px; font-size: 14px;">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="employee_records" t-as="record">
+                                            <t t-foreach="record.line_ids" t-as="line">
+                                                <tr style="border-bottom: 1px solid #ddd;">
+                                                    <td style="padding: 8px; font-size: 12px;">
+                                                        <span t-esc="line.product_id.name" />
+                                                    </td>
+                                                    <td style="padding: 8px; font-size: 12px;">
+                                                        <span t-esc="line.quantity" />
+                                                    </td>
+                                                    <td style="padding: 8px; font-size: 12px;">
+                                                        <span t-esc="'€' + '%.2f' % line.unit_price" />
+                                                    </td>
+                                                    <td style="padding: 8px; font-size: 12px;">
+                                                        <span t-esc="'€' + '%.2f' % line.subtotal" />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                    </t>
+
+                    <!-- Reporte individual (código original) -->
+                    <t t-else="">
+                        <t t-foreach="docs" t-as="doc">
+                            <table class="table table-sm table-bordered"
+                                style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                                <thead>
+                                    <tr style="background-color: #f8f8f8; text-align: left;">
+                                        <th style="padding: 10px; font-size: 14px;">Empleado</th>
+                                        <th style="padding: 10px; font-size: 14px;">Fecha</th>
+                                        <th style="padding: 10px; font-size: 14px;">Descripción del
+                                            Servicio</th>
+                                        <th style="padding: 10px; font-size: 14px;">Retribución
+                                            Empleado</th>
                                     </tr>
-                                </t>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.hr_service_record_ids" t-as="record">
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span t-esc="record.employee_id.name" />
+                                            </td>
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span
+                                                    t-esc="record.date and record.date.strftime('%Y-%m-%d')" />
+                                            </td>
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span t-esc="record.description" />
+                                            </td>
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span t-esc="'€' + '%.2f' % record.amout_employee" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
 
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="background-color: #f8f8f8; text-align: left;">
-									<th style="padding: 10px; font-size: 14px;">Producto</th>
-                                    <th style="padding: 10px; font-size: 14px;">Cantidad</th>
-                                    <th style="padding: 10px; font-size: 14px;">Precio Unitario</th>
-                                    <th style="padding: 10px; font-size: 14px;">Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="doc.hr_service_record_ids.line_ids" t-as="line">
-                                    <tr style="border-bottom: 1px solid #ddd;">
-										<td style="padding: 8px; font-size: 12px;"><span t-esc="line.product_id.name" /></td>
-                                        <td style="padding: 8px; font-size: 12px;"><span t-esc="line.quantity" /></td>
-                                         <td style="padding: 8px; font-size: 12px;">
-                                            <span t-esc="'€' + '%.2f' % line.unit_price" />
-                                        </td>
-                                        <td style="padding: 8px; font-size: 12px;">
-                                            <span t-esc="'€' + '%.2f' % line.subtotal" />
-                                        </td>
-                                    </tr>    
-                                </t>
-                            </tbody>
-                        </table>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #f8f8f8; text-align: left;">
+                                        <th style="padding: 10px; font-size: 14px;">Producto</th>
+                                        <th style="padding: 10px; font-size: 14px;">Cantidad</th>
+                                        <th style="padding: 10px; font-size: 14px;">Precio Unitario</th>
+                                        <th style="padding: 10px; font-size: 14px;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.hr_service_record_ids.line_ids" t-as="line">
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span t-esc="line.product_id.name" />
+                                            </td>
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span t-esc="line.quantity" />
+                                            </td>
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span t-esc="'€' + '%.2f' % line.unit_price" />
+                                            </td>
+                                            <td style="padding: 8px; font-size: 12px;">
+                                                <span t-esc="'€' + '%.2f' % line.subtotal" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
                     </t>
                 </div>
             </t>

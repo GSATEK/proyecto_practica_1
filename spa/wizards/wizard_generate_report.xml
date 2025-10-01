@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
         <form string="Generar Reporte">
             <group>
+                <field name="report_type"/>
                 <field name="employee_id"/> 
                 <field name="date_from"/>
                 <field name="date_to"/>

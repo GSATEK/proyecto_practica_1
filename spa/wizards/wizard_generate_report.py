@@ -4,7 +4,12 @@ class WizardGenerateReport(models.TransientModel):
     _name = "wizard.generate.employee.report"
     _description = "Wizard para generar reportes de servicios por empleado"
 
-    employee_id = fields.Many2one('hr.employee', string="Empleado", required=True)
+    report_type = fields.Selection([
+        ('employee', 'Reporte por Empleado'),
+        ('global', 'Reporte Global de Todos los Empleados')
+    ], string="Tipo de Reporte", default='employee', required=True)
+    
+    employee_id = fields.Many2one('hr.employee', string="Empleado", required=False)
     date_from = fields.Date(string="Fecha Desde", required=True)
     date_to = fields.Date(string="Fecha Hasta", required=True)
     
@@ -15,13 +20,26 @@ class WizardGenerateReport(models.TransientModel):
         help="Registros de servicio relacionados con el empleado y el rango de fechas.",
     )
 
-    def action_print_report(self):
-        return self.env.ref('spa.action_report_services').report_action(self)
-    
+    @api.depends('report_type', 'employee_id', 'date_from', 'date_to')
     def _compute_hr_service_record_ids(self):
         for record in self:
-            record.hr_service_record_ids = self.env['hr.employee.services.record'].search([
-                ('employee_id', '=', record.employee_id.id),
-                ('date', '>=', record.date_from), 
-                ('date', '<=', record.date_to)
-            ])
+            domain = []
+            
+            if record.date_from:
+                domain.append(('date', '>=', record.date_from))
+            if record.date_to:
+                domain.append(('date', '<=', record.date_to))
+            
+            if record.report_type == 'employee' and record.employee_id:
+                domain.append(('employee_id', '=', record.employee_id.id))
+            
+            record.hr_service_record_ids = self.env['hr.employee.services.record'].search(domain)
+    
+    @api.onchange('report_type')
+    def _onchange_report_type(self):
+        """Limpiar empleado cuando se selecciona reporte global"""
+        if self.report_type == 'global':
+            self.employee_id = False
+
+    def action_print_report(self):
+        return self.env.ref('spa.action_report_services').report_action(self)
