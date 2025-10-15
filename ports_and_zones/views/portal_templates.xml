@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- <template id="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+            <script type="text/javascript" src="/ports_and_zones/static/src/js/form_qr.js"></script>
+        </xpath>
+    </template> -->
+
     <template id="homeTemplate" name="Pagina de inicio">
         <t t-call="portal.frontend_layout">
-            <div class="container py-5 mt-4">
+            <div class="container py-5 mt-4 d-flex flex-column align-items-center">
                 <h2 class="section-title display-5 mb-5 text-center fw-bold">
-                    Bienvenidos a mi pagina web
+                    Registrar salida/entrada vehiculo
                 </h2>
+                <a href="/qr-scan" class="btn btn-primary m-auto">Escanear QR</a>
             </div>
+        </t>
+    </template>
+
+    <template id="qrScanTemplate" name="QR Scan Page">
+        <t t-call="portal.frontend_layout">
+            <div id="wrap">
+                <div class="container py-5">
+                    <div class="row justify-content-center">
+
+                        <div class="col-lg-6 col-md-8">
+                            <div class="card p-4 shadow">
+                                <h3 class="card-title text-center mb-4">Registra la accion del vehiculo</h3>
+                                <div id="reader" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <div class="card p-4 shadow">
+                                <h5 class="card-subtitle mb-3">Resultados del Escaneo</h5>
+                                <p class="msg-log border p-3 bg-light rounded"></p>
+                                <div class="box-selection d-flex gap-3 align-items-center" style="display: none !important;">
+                                    <span class="fw-bold">Accion:</span>
+                                    <select class="form-select w-auto">
+                                        <option value="0" disabled="disabled" selected="selected">Selecciona una accion</option>
+                                        <option value="salir">Salir</option>
+                                        <option value="estacionar">Estacionar</option>
+                                    </select>
+                                    <button class="btn btn-primary">Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://unpkg.com/html5-qrcode" type="text/javascript"/>
+            <script type="text/javascript" src="/ports_and_zones/static/src/js/form_qr.js"/>
         </t>
     </template>
 
