@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="homeTemplate" name="Pagina de inicio">
+        <t t-call="portal.frontend_layout">
+            <div class="container py-5 mt-4">
+                <h2 class="section-title display-5 mb-5 text-center fw-bold">
+                    Bienvenidos a mi pagina web
+                </h2>
+            </div>
+        </t>
+    </template>
+
+</odoo>

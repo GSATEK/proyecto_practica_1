@@ -5,11 +5,12 @@
     "description": "-.-",
     "author": "Jhonny",
     "website": "https://github.com/vandalieu06",
-    "depends": ["base", "fleet"],
+    "depends": ["base", "fleet", "web", "website"],
     "data": [
         "security/ir.model.access.csv",
         "views/view_fleet_port.xml",
         "views/code_port_increment.xml",
+        "views/portal_templates.xml",
     ],
     "images": ["static/description/icon.png"],
 }
