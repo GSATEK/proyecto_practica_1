@@ -9,6 +9,14 @@
         </xpath>
     </template> -->
 
+    <template id="custom_portal_header" inherit_id="website.navbar_nav" name="Custom Portal Header">
+        <xpath expr="//ul[@id='top_menu']" position="inside">
+            <li class="nav-item">
+                <a href="/qr-scan" class="nav-link">Escanear QR</a>
+            </li>
+        </xpath>
+    </template>
+
     <template id="homeTemplate" name="Pagina de inicio">
         <t t-call="portal.frontend_layout">
             <div class="container py-5 mt-4 d-flex flex-column align-items-center">
