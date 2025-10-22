@@ -50,18 +50,14 @@ class FleetPorts(models.Model):
         return records
 
     def write(self, vals):
-        # 1. Chequeamos si el campo 'vehicle_id' es uno de los campos que está siendo modificado
         if "vehicle_id" in vals:
             current_time = datetime.now()
             new_vehicle_id = vals.get("vehicle_id")
 
             for port in self:
-                # El vehículo que estaba asignado ANTES del cambio
                 old_vehicle = port.vehicle_id
 
-                # --- Lógica de CIERRE del registro de historial anterior ---
                 if old_vehicle:
-                    # Buscamos el último registro de historial que está abierto (sin time_out)
                     last_history = self.env["fleet.ports.history"].search(
                         [
                             ("port_id", "=", port.id),
@@ -73,12 +69,9 @@ class FleetPorts(models.Model):
                     )
 
                     if last_history:
-                        # Cerramos el registro anterior con la hora actual
                         last_history.write({"time_out": current_time})
 
-                # --- Lógica de CREACIÓN del nuevo registro de historial ---
-                if new_vehicle_id:  # Si se está asignando un nuevo vehículo (no es una desasignación a vacío)
-                    # Creamos el nuevo registro de historial con time_in=current_time
+                if new_vehicle_id:
                     self.env["fleet.ports.history"].create(
                         {
                             "port_id": port.id,

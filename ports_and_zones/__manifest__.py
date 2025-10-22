@@ -12,5 +12,10 @@
         "views/code_port_increment.xml",
         "views/portal_templates.xml",
     ],
+    "assets": {
+        "web.assets_frontend": [
+            "ports_and_zones/static/src/js/form_qr.js",
+        ],
+    },
     "images": ["static/description/icon.png"],
 }
