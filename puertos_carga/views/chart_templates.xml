@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="dashboard_charts" name="Dashboard Charts">
+        <t t-call="website.layout">
+            <div class="container">
+                <h2>Gráficos de ocupación</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="chart_ports"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="chart_hours"></canvas>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="assets_chartjs" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script type="text/javascript">
+                odoo.define('puertos_carga.charts', function(require){
+                    var ajax = require('web.ajax');
+                    $(function(){
+                        // cargar datos
+                        ajax.jsonRpc('/puertos/chart_data', 'call', {}).then(function(data){
+                            var ctx1 = document.getElementById('chart_ports').getContext('2d');
+                            new Chart(ctx1, {
+                                type: 'bar',
+                                data: {
+                                    labels: data.port_labels,
+                                    datasets: [{
+                                        label: 'Veces ocupada hoy',
+                                        data: data.port_values,
+                                        backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                                    }]
+                                }
+                            });
+
+                            var ctx2 = document.getElementById('chart_hours').getContext('2d');
+                            new Chart(ctx2, {
+                                type: 'line',
+                                data: {
+                                    labels: data.hour_labels,
+                                    datasets: [{
+                                        label: 'Actividad por hora',
+                                        data: data.hour_values,
+                                        borderColor: 'rgba(255,99,132,1)',
+                                        fill: false,
+                                    }]
+                                }
+                            });
+                        });
+                    });
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>

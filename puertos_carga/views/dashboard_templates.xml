@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="dashboard_template" name="Dashboard Puertos">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Dashboard de Puertos</h1>
+                <div id="ports_grid" class="row">
+                    <t t-foreach="ports" t-as="p">
+                        <div class="col-md-2">
+                            <button t-att-class="'btn btn-block ' + ('btn-danger' if p.is_occupied else 'btn-success')" t-att-data-id="p.id">
+                                <t t-esc="p.name"/>
+                            </button>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="puertos assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript">
+                odoo.define('puertos_carga.dashboard', function(require){
+                    var ajax = require('web.ajax');
+                    $(document).on('click', '#ports_grid button', function(){
+                        var port_id = $(this).data('id');
+                        ajax.jsonRpc('/puertos/get_port_by_id', 'call', {id: port_id}).then(function(data){
+                            if(data.error){
+                                alert(data.error);
+                                return;
+                            }
+                            if(data.is_occupied){
+                                alert('Vehículo: ' + data.vehicle.name + '\nMatrícula: ' + data.vehicle.license_plate);
+                            } else {
+                                alert('Plaza libre');
+                            }
+                        });
+                    });
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>
