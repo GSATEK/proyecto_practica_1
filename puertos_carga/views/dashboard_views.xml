@@ -17,6 +17,6 @@
         <field name="res_model">fleet.port</field>
         <field name="view_mode">tree,form</field>
     </record>
-    
-    <menuitem id="menu_puertos" name="Plazas" parent=" ports_and_zones.fleet_port_view" action="action_ports"/>
+
+    <menuitem id="menu_puertos" name="Plazas" parent="ports_and_zones.fleet_port_menu" action="action_ports"/>
 </odoo>
