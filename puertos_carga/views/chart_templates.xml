@@ -16,7 +16,7 @@
         </t>
     </template>
 
-    <template id="assets_chartjs" inherit_id="website.assets_frontend">
+    <!-- <template id="assets_chartjs" inherit_id="website.assets_frontend">
         <xpath expr="." position="inside">
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script type="text/javascript">
@@ -56,5 +56,5 @@
                 });
             </script>
         </xpath>
-    </template>
+    </template> -->
 </odoo>
