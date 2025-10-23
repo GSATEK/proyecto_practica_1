@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_vehicle_form_qr_code" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.qr.code</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet//field[@name='location']" position="after">
+                <field name="qr_code" widget="image" class="oe_avatar" style="width: 180px; height: 180px;"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_driver_form_qr_code" model="ir.ui.view">
+        <field name="name">view_driver_form_qr_code</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet//field[@name='next_assignation_date']" position="after">
+                <field name="driver_qr_code" widget="image" class="oe_avatar" style="width: 180px; height: 180px;"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

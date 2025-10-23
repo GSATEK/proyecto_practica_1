@@ -11,8 +11,12 @@
         "views/view_fleet_port.xml",
         "views/code_port_increment.xml",
         "views/portal_templates.xml",
+        "views/qr_views.xml",
     ],
     "assets": {
+        "web.assets_backend": [
+            "ports_and_zones/static/src/css/scss/flet_qr.scss",
+        ],
         "web.assets_frontend": [
             "ports_and_zones/static/src/js/form_qr.js",
         ],

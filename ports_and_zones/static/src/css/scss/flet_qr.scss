@@ -1,0 +1,9 @@
+.o_form_view {
+  .oe_avatar[name='qr_code'],
+  .oe_avatar[name='driver_qr_code'] {
+    img {
+      width: 180px !important;
+      height: 180px !important;
+    }
+  }
+}
