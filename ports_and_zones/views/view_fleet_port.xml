@@ -20,14 +20,25 @@
         <field name="model">fleet.ports</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                </header>
                 <sheet>
+                    <field name="qr_code" class="oe_avatar" widget="image" readonly="1"/>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="port_id" readonly="1" placeholder="ID del Puerto"/>
+                        </h1>
+                    </div>
+
                     <group>
-                        <field name="port_id" readonly="1"/>
                         <field name="port_name"/>
                         <field name="port_zone"/>
-                        <field name="port_status"/>
+                        <field name="port_status" readonly="1"/>
                         <field name="vehicle_id"/>
                     </group>
+
+                    <separator string="Información Adicional"/>
 
                     <notebook>
                         <page string="Historial de Asignaciones">

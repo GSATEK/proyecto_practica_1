@@ -30,7 +30,7 @@ class FleetVehicleExtension(models.Model):
             qr.make(fit=True)
             img = qr.make_image()
             temp = BytesIO()
-            img.save(temp, format="PNG")
+            img.save(temp, "PNG")
             qr_image = base64.b64encode(temp.getvalue())
 
             record.qr_code = qr_image

@@ -1,11 +1,8 @@
-const boxOptions = document.querySelector('.box-selection')
-
 let msg = document.querySelector('.msg-log')
 let count = 0
-
-const data = {
-  name: '',
-  vehicle: '',
+let data = {
+  vehicle_id: '',
+  port_id: '',
 }
 
 const sendScanData = async () => {
@@ -32,22 +29,22 @@ const sendScanData = async () => {
 }
 
 function onScanSuccess(decodedText, decodedResult) {
-  let currentLabel = count === 0 ? 'Persona: ' : 'Vehículo: '
+  let currentLabel = count === 0 ? 'Puerto: ' : 'Vehículo: '
   msg.innerHTML += currentLabel + decodedText + '<br>'
 
-  count === 0 ? (data.name = decodedText) : (data.vehicle = decodedText)
+  count === 0 ? (data.port_id = decodedText) : (data.vehicle_id = decodedText)
 
   count++
 
   if (count === 2) {
     html5QrcodeScanner.clear()
-    boxOptions.style.display = 'flex'
+    document.querySelector('.box-selection').style.display = 'flex'
 
     sendScanData()
   }
 }
 
-var html5QrcodeScanner = new Html5QrcodeScanner('reader', {
+let html5QrcodeScanner = new Html5QrcodeScanner('reader', {
   fps: 10,
   qrbox: 250,
 })
@@ -56,24 +53,20 @@ html5QrcodeScanner.render(onScanSuccess)
 
 // Estilos
 const divReader = document.querySelector('#reader')
-divReader.classList.add('border-0')
-
 const btnPermissionReader = document.querySelector(
   '#html5-qrcode-button-camera-permission'
 )
-btnPermissionReader.classList.add('py-2', 'px-4', 'btn-primary', 'rounded')
-btnPermissionReader.textContent = 'Permiso Camara'
-
 const btnUploadReader = document.querySelector(
   '#html5-qrcode-button-file-selection'
 )
-btnUploadReader.classList.add('py-2', 'px-4', 'btn-primary', 'rounded')
-
 const iconReader = document.querySelector('#reader > div img')
-iconReader.classList.add('d-none')
-
 const spanImgReader = document.querySelector(
   '#html5-qrcode-anchor-scan-type-change'
 )
 
+divReader.classList.add('border-0')
+btnPermissionReader.classList.add('py-2', 'px-4', 'btn-primary', 'rounded')
+btnPermissionReader.textContent = 'Permiso Camara'
+btnUploadReader.classList.add('py-2', 'px-4', 'btn-primary', 'rounded')
+iconReader.classList.add('d-none')
 spanImgReader.classList.add('d-none')

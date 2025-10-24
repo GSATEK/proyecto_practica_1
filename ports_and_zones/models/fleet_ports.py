@@ -1,5 +1,8 @@
 from odoo import models, fields, api
 from datetime import datetime
+import qrcode
+import base64
+from io import BytesIO
 
 
 class FleetPorts(models.Model):
@@ -19,10 +22,15 @@ class FleetPorts(models.Model):
     port_status = fields.Selection(
         [("ocupado", "Ocupado"), ("libre", "Libre")],
         string="Estado Puerto",
+        default="libre",
         required=True,
     )
 
     vehicle_id = fields.Many2one("fleet.vehicle", string="Vehículo", required=True)
+
+    qr_code = fields.Binary(
+        "QR Code", compute="_compute_qr_code", store=False, readonly=True
+    )
 
     history_ids = fields.One2many(
         "fleet.ports.history", "port_id", string="Historial de Asignaciones"
@@ -80,3 +88,22 @@ class FleetPorts(models.Model):
                     )
 
         return super(FleetPorts, self).write(vals)
+
+    @api.depends("port_id")
+    def _compute_qr_code(self):
+        for record in self:
+            if not record.port_id:
+                record.qr_code = False
+
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.ERROR_CORRECT_L,
+                box_size=10,
+                border=4,
+            )
+            qr.add_data(record.port_id)
+            qr.make(fit=True)
+            img = qr.make_image()
+            buffer = BytesIO()
+            img.save(buffer, "PNG")
+            record.qr_code = base64.b64encode(buffer.getvalue())

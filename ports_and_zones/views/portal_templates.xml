@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <!-- <template id="assets_frontend" inherit_id="web.assets_frontend">
-        <xpath expr="." position="inside">
-            <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
-            <script type="text/javascript" src="/ports_and_zones/static/src/js/form_qr.js"></script>
-        </xpath>
-    </template> -->
-
     <template id="custom_portal_header" inherit_id="website.navbar_nav" name="Custom Portal Header">
         <xpath expr="//ul[@id='top_menu']" position="inside">
             <li class="nav-item">
