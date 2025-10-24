@@ -3,6 +3,7 @@ let count = 0
 let data = {
   vehicle_id: '',
   port_id: '',
+  user_action: '',
 }
 
 const sendScanData = async () => {
@@ -38,9 +39,8 @@ function onScanSuccess(decodedText, decodedResult) {
 
   if (count === 2) {
     html5QrcodeScanner.clear()
-    document.querySelector('.box-selection').style.display = 'flex'
-
-    sendScanData()
+    let box = document.querySelector('.box-selection')
+    box.style.display = 'flex'
   }
 }
 
@@ -50,6 +50,13 @@ let html5QrcodeScanner = new Html5QrcodeScanner('reader', {
 })
 
 html5QrcodeScanner.render(onScanSuccess)
+
+const btnSubmitData = document.querySelector('.btn-submit-data')
+btnSubmitData.addEventListener('click', () => {
+  const option = document.querySelector('.form-select')
+  data.user_action = option.value
+  sendScanData()
+})
 
 // Estilos
 const divReader = document.querySelector('#reader')

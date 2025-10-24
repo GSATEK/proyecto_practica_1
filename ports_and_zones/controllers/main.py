@@ -6,11 +6,11 @@ logger = logging.getLogger(__name__)
 
 
 class PropetiesController(http.Controller):
-    @http.route("/", tupe="http", auth="public", website=True)
+    @http.route("/", type="http", auth="public", website=True)
     def homePage(self, **kw):
         return request.render("ports_and_zones.homeTemplate")
 
-    @http.route("/qr-scan", type="http", auth="public", website=True)
+    @http.route("/qr-scan", type="http", auth="user", website=True)
     def qrScan(self, **kw):
         return request.render("ports_and_zones.qrScanTemplate")
 
@@ -27,6 +27,7 @@ class PropetiesController(http.Controller):
         user = request.env.user
         port_id_qr = data.get("port_id")
         vehicle_id_qr = data.get("vehicle_id")
+        user_action = data.get("user_action")
 
         logger.info(
             f"Usuario: {user.id} | Puerto QR: {port_id_qr} | Vehículo QR: {vehicle_id_qr}"
@@ -54,8 +55,8 @@ class PropetiesController(http.Controller):
         try:
             port_record.sudo().write(
                 {
-                    "vehicle_id": vehicle_record.id,
-                    "port_status": "ocupado",
+                    "vehicle_id": (vehicle_record.id, False)[user_action == "entrar"],
+                    "port_status": "libre" if user_action == "salir" else "ocupado",
                 }
             )
 

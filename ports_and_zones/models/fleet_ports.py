@@ -26,7 +26,7 @@ class FleetPorts(models.Model):
         required=True,
     )
 
-    vehicle_id = fields.Many2one("fleet.vehicle", string="Vehículo", required=True)
+    vehicle_id = fields.Many2one("fleet.vehicle", string="Vehículo")
 
     qr_code = fields.Binary(
         "QR Code", compute="_compute_qr_code", store=False, readonly=True

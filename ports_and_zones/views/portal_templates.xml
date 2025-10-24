@@ -44,7 +44,7 @@
                                         <option value="salir">Salir</option>
                                         <option value="estacionar">Estacionar</option>
                                     </select>
-                                    <button class="btn btn-primary">Enviar</button>
+                                    <button class="btn btn-primary from-submit-data">Enviar</button>
                                 </div>
                             </div>
                         </div>
